@@ -94,6 +94,25 @@
         var face = new THREE.Mesh(geometry, mat);
         face.position.set(0,1.8,0.4); //位置を指定
 
+        // 壁を作成
+        var geometry = new THREE.PlaneGeometry(5, 5, 1);
+        var wall1 = new THREE.Mesh(geometry, mat);
+        wall1.position.set(0,2.5,-2.5); //位置を指定
+        scene.add(wall1);
+
+        // 壁を作成
+        var geometry = new THREE.PlaneGeometry(5, 5, 1);
+        var wall2 = new THREE.Mesh(geometry, mat);
+        wall2.position.set(0,2.5,-2.5); //位置を指定
+        scene.add(wall2);
+
+            // 壁を作成
+        var geometry = new THREE.PlaneGeometry(5, 5, 1);
+        var wall3 = new THREE.Mesh(geometry, mat);
+        wall3.position.set(0,2.5,-2.5); //位置を指定
+        scene.add(wall3);
+
+
             //前足
             var legs_a = new THREE.BoxGeometry(0.8, 0.6, 0.4);
             //上の底面の半径、下の底面の半径、高さ、何角柱か
@@ -107,6 +126,8 @@
 
             //人間のオブジェクト
             const man = new THREE.Group();
+            
+            
             man.add(face);
             man.add(head); // 頭を追加
             man.add(body); //体を追加
@@ -116,6 +137,7 @@
 
             man.position.set(0, 1, 0);//人間グループの原点の位置
             scene.add(man);
+
 
             //全体のオブジェクト
             const all = new THREE.Group();
