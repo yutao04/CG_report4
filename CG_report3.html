@@ -1,0 +1,147 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/three@0.137.4/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.137.4/examples/js/controls/OrbitControls.js"></script>
+</head>
+
+<body>
+    <script>
+        // ページの読み込みを待つ
+        window.addEventListener('DOMContentLoaded', init);
+
+        function init() {
+            // サイズを指定
+            const width = 800
+            const height = 600;
+
+            // レンダラーを作成
+            var renderer = new THREE.WebGLRenderer();
+            document.body.appendChild(renderer.domElement);
+            renderer.setSize(width, height);
+
+            // シーンを作成
+            const scene = new THREE.Scene();
+
+            // カメラを作成
+            const camera = new THREE.PerspectiveCamera(45, width / height);
+            // カメラの初期座標を設定
+            camera.position.set(0, 0, 10);
+
+            // カメラコントローラーを作成
+            const controls = new THREE.OrbitControls(camera, document.body);
+
+            // 平行光源1
+            var directionalLight1 = new THREE.DirectionalLight(0xffffff);
+            directionalLight1.position.set(10, 10, 10);
+            // シーンに追加
+            scene.add(directionalLight1);
+            // 平行光源2
+            var directionalLight2 = new THREE.DirectionalLight(0x888888);
+            directionalLight2.position.set(-10, -10, 10);
+            // シーンに追加
+            scene.add(directionalLight2);
+
+            // helper
+            const gridHelper = new THREE.GridHelper(2, 10); // size, step
+            scene.add(gridHelper);
+            const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
+            scene.add(axisHelper);
+
+            // 平面を作成
+            var planeGeometry = new THREE.PlaneGeometry(5, 5, 10, 10); //縦、横、分割数、分割数
+            var planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+            plane.rotation.set(-Math.PI / 2, 0, 0);
+            plane.position.set(0, 0, 0);
+            scene.add(plane);
+
+
+            //髪の毛を作成
+            var hair_g = new THREE.TorusKnotGeometry(0.18, 0.4, 20, 6, 3, 2);
+            //全体的な大きさ、チューブの太さ、クネクネの進む方向に対して何分割するか、
+            //チューブ方向に対して何分割するか、残りの二つの数字を変えるとクネクネの形が変わる
+            var Material_h = new THREE.MeshPhongMaterial({ color: 0xffff00 });
+            var hair = new THREE.Mesh(hair_g, Material_h);
+            hair.position.set(0, 1.9, -0.12);
+
+
+            // 頭を作成
+            var head_g = new THREE.BoxGeometry(0.8, 0.8, 0.8);
+            var material_b = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
+            var head = new THREE.Mesh(head_g, material_b);
+            head.position.set(0, 1.8, 0);//allの中心が原点になる
+
+
+            //体を作成
+            var body_g = new THREE.BoxGeometry(0.8, 1.2, 0.6);
+            var material_r = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
+            var body = new THREE.Mesh(body_g, material_r);
+            body.scale.y = 1.7;
+            body.position.set(0, 0.6, 0);
+
+            // クリーパー読み込み
+            var textureLoader = new THREE.TextureLoader();
+            var texture = textureLoader.load("enemy.jpg");
+            var mat = new THREE.MeshPhongMaterial();
+            mat.map = texture;
+
+            // 顔面を作成
+        var geometry = new THREE.PlaneGeometry(0.8, 0.8, 1);
+        //var material = new THREE.MeshPhongMaterial({ color: 0xffffff });
+        //var box = new THREE.Mesh(geometry, material);
+        var face = new THREE.Mesh(geometry, mat);
+        face.position.set(0,1.8,0.4); //位置を指定
+
+            //前足
+            var legs_a = new THREE.BoxGeometry(0.8, 0.6, 0.4);
+            //上の底面の半径、下の底面の半径、高さ、何角柱か
+            var legsMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
+            var llegs = new THREE.Mesh(legs_a, legsMaterial);
+            llegs.position.set(0, -0.7, 0.4);
+
+            //後ろ足
+            var rlegs = new THREE.Mesh(legs_a, legsMaterial);
+            rlegs.position.set(0, -0.7, -0.4);
+
+            //人間のオブジェクト
+            const man = new THREE.Group();
+            man.add(face);
+            man.add(head); // 頭を追加
+            man.add(body); //体を追加
+            man.add(llegs);
+            man.add(rlegs);
+
+
+            man.position.set(0, 1, 0);//人間グループの原点の位置
+            scene.add(man);
+
+            //全体のオブジェクト
+            const all = new THREE.Group();
+            all.add(plane);//平面を追加
+            all.add(man); // 人間を追加
+            all.position.set(0, 0, 0);//全体グループの原点の位置
+            scene.add(all);
+
+            update();
+
+            // 毎フレーム時に実行されるループイベントです
+            function update() {
+                // レンダリング
+                renderer.render(scene, camera);
+                requestAnimationFrame(update);
+
+
+                // 人間を回転させる
+                man.rotation.y += 0.005;;
+
+                // 全体を回転させる
+                //all.rotation.x += 0.01;
+                //all.rotation.y += 0.005;;
+            }
+        }
+    </script>
+</body>
+
+</html>
