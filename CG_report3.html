@@ -144,7 +144,7 @@
             var rlegs = new THREE.Mesh(legs_a, legsMaterial);
             rlegs.position.set(0, -0.7, -0.4);
 
-            //　炎の作成
+            //炎の作成
 
             // set path to texture images
             // either relative or absolute path
@@ -172,7 +172,7 @@
             const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
             scene.add(ambientLight);
 
-            tick();
+            
 
             //クリーパーのオブジェクト
             const man = new THREE.Group();
@@ -196,7 +196,7 @@
             all.position.set(0, 0, 0);//全体グループの原点の位置
             scene.add(all);
 
-            update();
+            tick();
 
             // 毎フレーム時に実行されるループイベントです
             function tick() {
@@ -216,20 +216,7 @@
                 renderer.render(scene, camera);
             }
 
-            // 毎フレーム時に実行されるループイベントです
-            function update() {
-                // レンダリング
-                renderer.render(scene, camera);
-                requestAnimationFrame(update);
-
-
-                // 人間を回転させる
-                man.rotation.y += 0.005;;
-
-                // 全体を回転させる
-                //all.rotation.x += 0.01;
-                //all.rotation.y += 0.005;;
-            }
+            
         }
     </script>
 </body>
