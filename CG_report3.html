@@ -113,22 +113,24 @@
             mat.map = texture;
 
 
-            // 壁を作成
+            // 壁正面を作成
             var geometry = new THREE.PlaneGeometry(5, 5, 1);
             var wall1 = new THREE.Mesh(geometry, mat);
             wall1.position.set(0, 2.5, -2.5); //位置を指定
             scene.add(wall1);
 
-            // 壁を作成
+            // 壁右を作成
             var geometry = new THREE.PlaneGeometry(5, 5, 1);
             var wall2 = new THREE.Mesh(geometry, mat);
-            wall2.position.set(0, 2.5, -2.5); //位置を指定
+            wall2.rotation.set(0, -Math.PI / 2, 0);
+            wall2.position.set(2.5, 2.5, 0); //位置を指定
             scene.add(wall2);
 
-            // 壁を作成
+            // 壁左を作成
             var geometry = new THREE.PlaneGeometry(5, 5, 1);
             var wall3 = new THREE.Mesh(geometry, mat);
-            wall3.position.set(0, 2.5, -2.5); //位置を指定
+            wall3.rotation.set(0,  1.57, 0);
+            wall3.position.set(-2.5, 2.5, 0); //位置を指定
             scene.add(wall3);
 
 
