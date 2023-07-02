@@ -49,23 +49,19 @@
             const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
             scene.add(axisHelper);
 
+            // 壁読み込み
+            var textureLoader = new THREE.TextureLoader();
+            var texture = textureLoader.load("tree.jpg");
+            var mat = new THREE.MeshPhongMaterial();
+            mat.map = texture;
+
             // 平面を作成
             var planeGeometry = new THREE.PlaneGeometry(5, 5, 10, 10); //縦、横、分割数、分割数
-            var planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-            var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+           // var planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            var plane = new THREE.Mesh(planeGeometry, mat);
             plane.rotation.set(-Math.PI / 2, 0, 0);
             plane.position.set(0, 0, 0);
             scene.add(plane);
-
-
-            //髪の毛を作成
-            var hair_g = new THREE.TorusKnotGeometry(0.18, 0.4, 20, 6, 3, 2);
-            //全体的な大きさ、チューブの太さ、クネクネの進む方向に対して何分割するか、
-            //チューブ方向に対して何分割するか、残りの二つの数字を変えるとクネクネの形が変わる
-            var Material_h = new THREE.MeshPhongMaterial({ color: 0xffff00 });
-            var hair = new THREE.Mesh(hair_g, Material_h);
-            hair.position.set(0, 1.9, -0.12);
-
 
             // 頭を作成
             var head_g = new THREE.BoxGeometry(0.8, 0.8, 0.8);
@@ -88,29 +84,35 @@
             mat.map = texture;
 
             // 顔面を作成
-        var geometry = new THREE.PlaneGeometry(0.8, 0.8, 1);
-        //var material = new THREE.MeshPhongMaterial({ color: 0xffffff });
-        //var box = new THREE.Mesh(geometry, material);
-        var face = new THREE.Mesh(geometry, mat);
-        face.position.set(0,1.8,0.4); //位置を指定
+            var geometry = new THREE.PlaneGeometry(0.8, 0.8, 1);
+            //var material = new THREE.MeshPhongMaterial({ color: 0xffffff });
+            //var box = new THREE.Mesh(geometry, material);
+            var face = new THREE.Mesh(geometry, mat);
+            face.position.set(0, 1.8, 0.4); //位置を指定
 
-        // 壁を作成
-        var geometry = new THREE.PlaneGeometry(5, 5, 1);
-        var wall1 = new THREE.Mesh(geometry, mat);
-        wall1.position.set(0,2.5,-2.5); //位置を指定
-        scene.add(wall1);
-
-        // 壁を作成
-        var geometry = new THREE.PlaneGeometry(5, 5, 1);
-        var wall2 = new THREE.Mesh(geometry, mat);
-        wall2.position.set(0,2.5,-2.5); //位置を指定
-        scene.add(wall2);
+            // 壁読み込み
+            var textureLoader = new THREE.TextureLoader();
+            var texture = textureLoader.load("tree.jpg");
+            var mat = new THREE.MeshPhongMaterial();
+            mat.map = texture;
 
             // 壁を作成
-        var geometry = new THREE.PlaneGeometry(5, 5, 1);
-        var wall3 = new THREE.Mesh(geometry, mat);
-        wall3.position.set(0,2.5,-2.5); //位置を指定
-        scene.add(wall3);
+            var geometry = new THREE.PlaneGeometry(5, 5, 1);
+            var wall1 = new THREE.Mesh(geometry, mat);
+            wall1.position.set(0, 2.5, -2.5); //位置を指定
+            scene.add(wall1);
+
+            // 壁を作成
+            var geometry = new THREE.PlaneGeometry(5, 5, 1);
+            var wall2 = new THREE.Mesh(geometry, mat);
+            wall2.position.set(0, 2.5, -2.5); //位置を指定
+            scene.add(wall2);
+
+            // 壁を作成
+            var geometry = new THREE.PlaneGeometry(5, 5, 1);
+            var wall3 = new THREE.Mesh(geometry, mat);
+            wall3.position.set(0, 2.5, -2.5); //位置を指定
+            scene.add(wall3);
 
 
             //前足
@@ -126,8 +128,8 @@
 
             //人間のオブジェクト
             const man = new THREE.Group();
-            
-            
+
+
             man.add(face);
             man.add(head); // 頭を追加
             man.add(body); //体を追加
