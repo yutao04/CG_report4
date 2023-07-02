@@ -143,6 +143,36 @@
             var rlegs = new THREE.Mesh(legs_a, legsMaterial);
             rlegs.position.set(0, -0.7, -0.4);
 
+            //　炎の作成
+
+            // set path to texture images
+            // either relative or absolute path
+            VolumetricFire.texturePath = './textures/';
+            var fireWidth = 100;
+            var fireHeight = 400;
+            var fireDepth = 100;
+            var sliceSpacing = 10;
+
+            var fire = new VolumetricFire(
+                fireWidth,
+                fireHeight,
+                fireDepth,
+                sliceSpacing,
+                camera
+            );
+            scene.add(fire.mesh);
+
+            // you can set position, rotation and scale
+            // fire.mesh accepts THREE.mesh features
+            fire.mesh.position.set(0, fireHeight / 2, 0);
+
+
+            // 光源（環境光）
+            const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
+            scene.add(ambientLight);
+
+            tick();
+
             //クリーパーのオブジェクト
             const man = new THREE.Group();
 
@@ -166,6 +196,24 @@
             scene.add(all);
 
             update();
+
+            // 毎フレーム時に実行されるループイベントです
+            function tick() {
+                // レンダリング
+                requestAnimationFrame(tick);
+
+                var elapsed = clock.getElapsedTime();
+
+                //camera.position.set(
+                //  Math.sin( elapsed * 0.01 ) * 800,
+                //  Math.sin( elapsed * 0.05 ) * 1000,
+                //  Math.cos( elapsed * 0.01 ) * 800
+                // );
+                // camera.lookAt( scene.position );
+
+                fire.update(elapsed);
+                renderer.render(scene, camera);
+            }
 
             // 毎フレーム時に実行されるループイベントです
             function update() {
