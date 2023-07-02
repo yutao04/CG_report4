@@ -106,30 +106,24 @@
             var face = new THREE.Mesh(geometry, mat);
             face.position.set(0, 1.8, 0.4); //位置を指定
 
-            // 壁読み込み
+            // 壁作成
             var textureLoader = new THREE.TextureLoader();
             var texture = textureLoader.load("tree.jpg");
             var mat = new THREE.MeshPhongMaterial();
             mat.map = texture;
+             const material = new THREE.SpriteMaterial({ map: texture, });
 
+            // 壁正面
+            const sprite1 = new THREE.Sprite(material);
+            sprite1.scale.set(5, 5, 1);
+            sprite1.position.set(0, 2.5, -2.5); //位置を指定
+            scene.add(sprite1);
 
-            // 壁を作成
-            var geometry = new THREE.PlaneGeometry(5, 5, 1);
-            var wall1 = new THREE.Mesh(geometry, mat);
-            wall1.position.set(0, 2.5, -2.5); //位置を指定
-            scene.add(wall1);
-
-            // 壁を作成
-            var geometry = new THREE.PlaneGeometry(5, 5, 1);
-            var wall2 = new THREE.Mesh(geometry, mat);
-            wall2.position.set(0, 2.5, -2.5); //位置を指定
-            scene.add(wall2);
-
-            // 壁を作成
-            var geometry = new THREE.PlaneGeometry(5, 5, 1);
-            var wall3 = new THREE.Mesh(geometry, mat);
-            wall3.position.set(0, 2.5, -2.5); //位置を指定
-            scene.add(wall3);
+            // 壁左
+            const sprite2 = new THREE.Sprite(material);
+            sprite2.scale.set(5, 5, 1);
+            sprite2.position.set(-2.5, 2.5, 0); //位置を指定
+            scene.add(sprite2);
 
 
             //前足
