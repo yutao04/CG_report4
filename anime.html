@@ -197,7 +197,7 @@
         // 光源（環境光）
         const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
         scene.add(ambientLight);
-        
+
             //クリーパーのオブジェクト
             const man = new THREE.Group();
 
@@ -219,13 +219,32 @@
 
             let v = 1;
        
-
+            update();
         tick();
 
+        function update() {
+                // レンダリング
+                renderer.render(scene, camera);
+                requestAnimationFrame(update);
+
+
+                // 人間を回転させる
+                
+                man.position.z += v;
+                if (1 < man.position.z) {
+                    v = -0.01;
+                }
+                if (man.position.z < -1) {
+                    v = 0.01;
+                }
+                // 全体を回転させる
+                //all.rotation.x += 0.01;
+                //all.rotation.y += 0.005;;
+            }
+            
         // 毎フレーム時に実行されるループイベントです
         function tick() {
           // レンダリング
-          renderer.render(scene, camera);
           requestAnimationFrame( tick );
           
           var elapsed = clock.getElapsedTime();
@@ -236,15 +255,6 @@
           //  Math.cos( elapsed * 0.01 ) * 800
          // );
          // camera.lookAt( scene.position );
-
-         man.position.z += v;
-                if (1 < man.position.z) {
-                    v = -0.01;
-                }
-                if (man.position.z < -1) {
-                    v = 0.01;
-                }
-                
           fire.update( elapsed );
           renderer.render(scene, camera);
         }
