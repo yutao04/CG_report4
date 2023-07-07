@@ -58,13 +58,26 @@
         // フォグ（霞）を有効にする
        // material.fog = true;
 
-        // トーチの作成
-        var cylinderGeometry = new THREE.CylinderGeometry( 50, 30, 200, 8 );
+        // トーチ正面の作成
+        var cylinderGeometry = new THREE.CylinderGeometry( 0.05, 0.03, 1, 8 );
         //上の底面の半径、下の底面の半径、高さ、何角柱か
         var cylinderMaterial = new THREE.MeshPhongMaterial( {color: 0xefa92a} );
         var cylinder = new THREE.Mesh( cylinderGeometry, cylinderMaterial );
-        cylinder.position.set( 0, -100, 0 );
+        cylinder.rotation.set(0.5, 0, 0);
+        cylinder.position.set( 0, 3.2, -2 );
         scene.add( cylinder );
+
+        // トーチ右の作成
+        var cylinder1 = new THREE.Mesh( cylinderGeometry, cylinderMaterial );
+        cylinder1.rotation.set(0, 0, 0.5);
+        cylinder1.position.set( 2, 3.2, 0 );
+        scene.add( cylinder1 );
+
+        // トーチの作成
+        var cylinder2 = new THREE.Mesh( cylinderGeometry, cylinderMaterial );
+        cylinder2.rotation.set(0, 0, -0.5);
+        cylinder2.position.set( -2, 3.2, 0 );
+        scene.add( cylinder2 );
 
         // 壁読み込み
             var textureLoader = new THREE.TextureLoader();
@@ -164,8 +177,8 @@
         // set path to texture images
         // either relative or absolute path
         VolumetricFire.texturePath = './textures/';
-        var fireWidth  = 100;
-        var fireHeight = 400;
+        var fireWidth  = 1;
+        var fireHeight = 4;
         var fireDepth  = 100;
         var sliceSpacing = 10;
 
