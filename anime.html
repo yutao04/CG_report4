@@ -170,27 +170,7 @@
             var rlegs = new THREE.Mesh(legs_a, legsMaterial);
             rlegs.position.set(0, -0.7, -0.4);
 
-            //クリーパーのオブジェクト
-            const man = new THREE.Group();
-
-            man.add(face);
-            man.add(head); // 頭を追加
-            man.add(body); //体を追加
-            man.add(llegs);
-            man.add(rlegs);
-
-            man.position.set(0, 1, 0);//人間グループの原点の位置
-            scene.add(man);
-
-            //全体のオブジェクト
-            const all = new THREE.Group();
-            all.add(plane);//平面を追加
-            all.add(man); // 人間を追加
-            all.position.set(0, 0, 0);//全体グループの原点の位置
-            scene.add(all);
-
-            let v = 1;
-        //　炎の作成
+             //　炎の作成
 
         // set path to texture images
         // either relative or absolute path
@@ -217,6 +197,28 @@
         // 光源（環境光）
         const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
         scene.add(ambientLight);
+        
+            //クリーパーのオブジェクト
+            const man = new THREE.Group();
+
+            man.add(face);
+            man.add(head); // 頭を追加
+            man.add(body); //体を追加
+            man.add(llegs);
+            man.add(rlegs);
+
+            man.position.set(0, 1, 0);//人間グループの原点の位置
+            scene.add(man);
+
+            //全体のオブジェクト
+            const all = new THREE.Group();
+            all.add(plane);//平面を追加
+            all.add(man); // 人間を追加
+            all.position.set(0, 0, 0);//全体グループの原点の位置
+            scene.add(all);
+
+            let v = 1;
+       
 
         tick();
 
