@@ -11,8 +11,8 @@
       window.addEventListener('load', init);
 
       function init() {
-       // サイズを指定
-            const width = 800
+        // サイズを指定
+        const width = 800
             const height = 600;
 
             // レンダラーを作成
@@ -80,7 +80,7 @@
         scene.add( cylinder2 );
 
         // 壁読み込み
-            var textureLoader = new THREE.TextureLoader();
+        var textureLoader = new THREE.TextureLoader();
             var texture = textureLoader.load("tree.jpg");
             var mat = new THREE.MeshPhongMaterial();
             mat.map = texture;
@@ -147,14 +147,12 @@
             scene.add(wall1);
 
             // 壁右を作成
-            var geometry = new THREE.PlaneGeometry(5, 5, 1);
             var wall2 = new THREE.Mesh(geometry, mat);
             wall2.rotation.set(0, -Math.PI / 2, 0);
             wall2.position.set(2.5, 2.5, 0); //位置を指定
             scene.add(wall2);
 
             // 壁左を作成
-            var geometry = new THREE.PlaneGeometry(5, 5, 1);
             var wall3 = new THREE.Mesh(geometry, mat);
             wall3.rotation.set(0, 1.57, 0);
             wall3.position.set(-2.5, 2.5, 0); //位置を指定
@@ -172,34 +170,6 @@
             var rlegs = new THREE.Mesh(legs_a, legsMaterial);
             rlegs.position.set(0, -0.7, -0.4);
 
-             //　炎の作成
-
-        // set path to texture images
-        // either relative or absolute path
-        VolumetricFire.texturePath = './textures/';
-        var fireWidth  = 1;
-        var fireHeight = 4;
-        var fireDepth  = 100;
-        var sliceSpacing = 10;
-
-        var fire = new VolumetricFire(
-          fireWidth,
-          fireHeight,
-          fireDepth,
-          sliceSpacing,
-          camera
-        );
-        scene.add( fire.mesh );
-
-        // you can set position, rotation and scale
-        // fire.mesh accepts THREE.mesh features
-        fire.mesh.position.set( 0, fireHeight / 2, 0 );
-
-
-        // 光源（環境光）
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
-        scene.add(ambientLight);
-        
             //クリーパーのオブジェクト
             const man = new THREE.Group();
 
@@ -220,15 +190,42 @@
             scene.add(all);
 
             let v = 1;
-       
+        //　炎の作成
+
+        // set path to texture images
+        // either relative or absolute path
+        VolumetricFire.texturePath = './textures/';
+        var fireWidth  = 100;
+        var fireHeight = 400;
+        var fireDepth  = 100;
+        var sliceSpacing = 10;
+
+        var fire = new VolumetricFire(
+          fireWidth,
+          fireHeight,
+          fireDepth,
+          sliceSpacing,
+          camera
+        );
+        scene.add( fire.mesh );
+
+        // you can set position, rotation and scale
+        // fire.mesh accepts THREE.mesh features
+        fire.mesh.position.set( 0, fireHeight / 2, 0 );
+
+
+        // 光源（環境光）
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
+        scene.add(ambientLight);
 
         tick();
 
         // 毎フレーム時に実行されるループイベントです
         function tick() {
           // レンダリング
+          renderer.render(scene, camera);
           requestAnimationFrame( tick );
-
+          
           var elapsed = clock.getElapsedTime();
 
           //camera.position.set(
@@ -238,6 +235,14 @@
          // );
          // camera.lookAt( scene.position );
 
+         man.position.z += v;
+                if (1 < man.position.z) {
+                    v = -0.01;
+                }
+                if (man.position.z < -1) {
+                    v = 0.01;
+                }
+                
           fire.update( elapsed );
           renderer.render(scene, camera);
         }
