@@ -71,8 +71,14 @@
       cylinder2.rotation.set(0, 0, -0.5);
       cylinder2.position.set(-2, 3.2, 0);
       scene.add(cylinder2);
-
-        
+      
+        // トーチの作成
+        var cylinderGeometry = new THREE.CylinderGeometry( 50, 30, 200, 8 );
+        //上の底面の半径、下の底面の半径、高さ、何角柱か
+        var cylinderMaterial = new THREE.MeshPhongMaterial( {color: 0xefa92a} );
+        var cylinder3 = new THREE.Mesh( cylinderGeometry, cylinderMaterial );
+        cylinder3.position.set( 0, -100, 0 );
+        scene.add( cylinder3 );
 
         //　炎の作成
 
