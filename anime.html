@@ -52,7 +52,7 @@
        // material.fog = true;
 
        // トーチ正面の作成
-      var cylinderGeometry = new THREE.CylinderGeometry(50, 30, 100, 8);
+      var cylinderGeometry = new THREE.CylinderGeometry(5, 3, 200, 8);
       //上の底面の半径、下の底面の半径、高さ、何角柱か
       var cylinderMaterial = new THREE.MeshPhongMaterial({ color: 0xefa92a });
       var cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
@@ -63,23 +63,41 @@
       // トーチ右の作成
       var cylinder1 = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
       cylinder1.rotation.set(0, 0, 0.5);
-      cylinder1.position.set(2, 3.2, 0);
+      cylinder1.position.set(200, 320, 0);
       scene.add(cylinder1);
 
       // トーチの作成
       var cylinder2 = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
       cylinder2.rotation.set(0, 0, -0.5);
-      cylinder2.position.set(-2, 3.2, 0);
+      cylinder2.position.set(-200, 320, 0);
       scene.add(cylinder2);
       
-        // トーチの作成
-        var cylinderGeometry = new THREE.CylinderGeometry( 50, 30, 200, 8 );
-        //上の底面の半径、下の底面の半径、高さ、何角柱か
-        var cylinderMaterial = new THREE.MeshPhongMaterial( {color: 0xefa92a} );
-        var cylinder3 = new THREE.Mesh( cylinderGeometry, cylinderMaterial );
-        cylinder3.position.set( 0, -100, 0 );
-        scene.add( cylinder3 );
+      // 壁読み込み
+      var textureLoader = new THREE.TextureLoader();
+      var texture = textureLoader.load("tree.jpg");
+      var mat = new THREE.MeshPhongMaterial();
+      mat.map = texture;
 
+      // 平面を作成
+      var planeGeometry = new THREE.PlaneGeometry(500, 500, 10, 10); //縦、横、分割数、分割数
+      // var planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      var plane = new THREE.Mesh(planeGeometry, mat);
+      plane.rotation.set(-Math.PI / 2, 0, 0);
+      plane.position.set(0, 0, 0);
+      scene.add(plane);
+
+       // ガラス読み込み
+       var textureLoader = new THREE.TextureLoader();
+      var texture = textureLoader.load("windows.jpg");
+      var mat = new THREE.MeshPhongMaterial();
+      mat.map = texture;
+
+      // ガラスを作成
+      var planeGeometry = new THREE.PlaneGeometry(100, 100, 10, 10); //縦、横、分割数、分割数
+      //var planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      var plane = new THREE.Mesh(planeGeometry, mat);
+      plane.position.set(100, 250, -249);
+      scene.add(plane);
         //　炎の作成
 
         // set path to texture images
