@@ -167,9 +167,9 @@
       // set path to texture images
       // either relative or absolute path
       VolumetricFire.texturePath = './textures/';
-      var fireWidth = 10;
-      var fireHeight = 40;
-      var fireDepth = 10;
+      var fireWidth = 100;
+      var fireHeight = 200;
+      var fireDepth = 100;
       var sliceSpacing = 10;
 
       var fire = new VolumetricFire(
@@ -181,7 +181,7 @@
       );
       
       scene.add(fire.mesh);
-
+      
       // you can set position, rotation and scale
       // fire.mesh accepts THREE.mesh features
       fire.mesh.position.set(200, 520, 0);
