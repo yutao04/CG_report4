@@ -52,24 +52,24 @@
       // material.fog = true;
 
       // トーチ正面の作成
-      var cylinderGeometry = new THREE.CylinderGeometry(5, 3, 200, 8);
+      var cylinderGeometry = new THREE.CylinderGeometry(5, 3, 100, 8);
       //上の底面の半径、下の底面の半径、高さ、何角柱か
       var cylinderMaterial = new THREE.MeshPhongMaterial({ color: 0xefa92a });
       var cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
       cylinder.rotation.set(0.5, 0, 0);
-      cylinder.position.set(0, 320, -200);
+      cylinder.position.set(0, 220, -200);
       scene.add(cylinder);
 
       // トーチ右の作成
       var cylinder1 = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
       cylinder1.rotation.set(0, 0, 0.5);
-      cylinder1.position.set(200, 320, 0);
+      cylinder1.position.set(200, 220, 0);
       scene.add(cylinder1);
 
       // トーチの作成
       var cylinder2 = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
       cylinder2.rotation.set(0, 0, -0.5);
-      cylinder2.position.set(-200, 320, 0);
+      cylinder2.position.set(-200, 220, 0);
       scene.add(cylinder2);
 
       // 壁読み込み
@@ -184,7 +184,7 @@
       
       // you can set position, rotation and scale
       // fire.mesh accepts THREE.mesh features
-      fire.mesh.position.set(200, 520, 0);
+      fire.mesh.position.set(180, 320, 0);
 
 
       // 光源（環境光）
