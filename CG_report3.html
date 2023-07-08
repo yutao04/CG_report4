@@ -12,43 +12,36 @@
 
     function init() {
       // サイズを指定
-      const width = 800
-      const height = 600;
+      const width = 960;
+      const height = 540;
 
+      var clock = new THREE.Clock();
       // レンダラーを作成
-      var renderer = new THREE.WebGLRenderer();
-      document.body.appendChild(renderer.domElement);
+      const renderer = new THREE.WebGLRenderer({
+        canvas: document.querySelector('#myCanvas')
+      });
       renderer.setSize(width, height);
-
-      // 背景の色を設定
-      renderer.setClearColor(0x003366);
+      // 光源が関係ないので
+      renderer.setClearColor(0x333333, 1.0);
 
       // シーンを作成
       const scene = new THREE.Scene();
+      // シーン全体のフォグ
+      //scene.fog = new THREE.Fog(0x000000, 800, 2000);
 
       // カメラを作成
       const camera = new THREE.PerspectiveCamera(45, width / height);
       // カメラの初期座標を設定
-      camera.position.set(0, 0, 10);
+      camera.position.set(0, 0, 1000);
 
       // カメラコントローラーを作成
-      const controls = new THREE.OrbitControls(camera, document.body);
-
-      // 平行光源1
-      var directionalLight1 = new THREE.DirectionalLight(0xffffff);
-      directionalLight1.position.set(10, 10, 10);
-      // シーンに追加
-      scene.add(directionalLight1);
-      // 平行光源2
-      var directionalLight2 = new THREE.DirectionalLight(0x888888);
-      directionalLight2.position.set(-10, -10, 10);
-      // シーンに追加
-      scene.add(directionalLight2);
+      const controls = new THREE.OrbitControls(camera);
+      controls.autoRotate = true;
 
       // helper
-      const gridHelper = new THREE.GridHelper(2, 10); // size, step
-      scene.add(gridHelper);
-      const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
+      //const gridHelper = new THREE.GridHelper(1000,20); // size, step
+      //scene.add(gridHelper);
+      const axisHelper = new THREE.AxisHelper(1000); //軸の長さ　X：赤、Y：緑、z：青
       scene.add(axisHelper);
 
       // マテリアルを作成する
@@ -59,25 +52,13 @@
       // material.fog = true;
 
       // トーチ正面の作成
-      var cylinderGeometry = new THREE.CylinderGeometry(0.05, 0.03, 1, 8);
+      var cylinderGeometry = new THREE.CylinderGeometry(5, 3, 100, 8);
       //上の底面の半径、下の底面の半径、高さ、何角柱か
       var cylinderMaterial = new THREE.MeshPhongMaterial({ color: 0xefa92a });
       var cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
       cylinder.rotation.set(0.5, 0, 0);
-      cylinder.position.set(0, 3.2, -2);
+      cylinder.position.set(0, 220, -200);
       scene.add(cylinder);
-
-      // トーチ右の作成
-      var cylinder1 = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
-      cylinder1.rotation.set(0, 0, 0.5);
-      cylinder1.position.set(2, 3.2, 0);
-      scene.add(cylinder1);
-
-      // トーチの作成
-      var cylinder2 = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
-      cylinder2.rotation.set(0, 0, -0.5);
-      cylinder2.position.set(-2, 3.2, 0);
-      scene.add(cylinder2);
 
       // 壁読み込み
       var textureLoader = new THREE.TextureLoader();
@@ -86,7 +67,7 @@
       mat.map = texture;
 
       // 平面を作成
-      var planeGeometry = new THREE.PlaneGeometry(5, 5, 10, 10); //縦、横、分割数、分割数
+      var planeGeometry = new THREE.PlaneGeometry(500, 500, 10, 10); //縦、横、分割数、分割数
       // var planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
       var plane = new THREE.Mesh(planeGeometry, mat);
       plane.rotation.set(-Math.PI / 2, 0, 0);
@@ -100,25 +81,25 @@
       mat.map = texture;
 
       // ガラスを作成
-      var planeGeometry = new THREE.PlaneGeometry(1, 1, 10, 10); //縦、横、分割数、分割数
+      var planeGeometry = new THREE.PlaneGeometry(100, 100, 10, 10); //縦、横、分割数、分割数
       //var planeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
       var plane = new THREE.Mesh(planeGeometry, mat);
-      plane.position.set(1, 2.5, -2.49);
+      plane.position.set(100, 250, -249);
       scene.add(plane);
 
       // 頭を作成
-      var head_g = new THREE.BoxGeometry(0.8, 0.8, 0.8);
+      var head_g = new THREE.BoxGeometry(80, 80, 80);
       var material_b = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
       var head = new THREE.Mesh(head_g, material_b);
-      head.position.set(0, 1.8, 0);//allの中心が原点になる
+      head.position.set(0, 180, 0);//allの中心が原点になる
 
 
       //体を作成
-      var body_g = new THREE.BoxGeometry(0.8, 1.2, 0.6);
+      var body_g = new THREE.BoxGeometry(80, 120, 60);
       var material_r = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
       var body = new THREE.Mesh(body_g, material_r);
       body.scale.y = 1.7;
-      body.position.set(0, 0.6, 0);
+      body.position.set(0, 60, 0);
 
       // クリーパー読み込み
       var textureLoader = new THREE.TextureLoader();
@@ -127,11 +108,11 @@
       mat.map = texture;
 
       // 顔面を作成
-      var geometry = new THREE.PlaneGeometry(0.8, 0.8, 1);
+      var geometry = new THREE.PlaneGeometry(80, 80, 100);
       //var material = new THREE.MeshPhongMaterial({ color: 0xffffff });
       //var box = new THREE.Mesh(geometry, material);
       var face = new THREE.Mesh(geometry, mat);
-      face.position.set(0, 1.8, 0.4); //位置を指定
+      face.position.set(0, 180, 40); //位置を指定
 
       // 壁読み込み
       var textureLoader = new THREE.TextureLoader();
@@ -141,44 +122,43 @@
 
 
       // 壁正面を作成
-      var geometry = new THREE.PlaneGeometry(5, 5, 1);
+      var geometry = new THREE.PlaneGeometry(500, 500, 1);
       var wall1 = new THREE.Mesh(geometry, mat);
-      wall1.position.set(0, 2.5, -2.5); //位置を指定
+      wall1.position.set(0, 250, -250); //位置を指定
       scene.add(wall1);
 
       // 壁右を作成
       var wall2 = new THREE.Mesh(geometry, mat);
       wall2.rotation.set(0, -Math.PI / 2, 0);
-      wall2.position.set(2.5, 2.5, 0); //位置を指定
+      wall2.position.set(250, 250, 0); //位置を指定
       scene.add(wall2);
 
       // 壁左を作成
       var wall3 = new THREE.Mesh(geometry, mat);
-      wall3.rotation.set(0, 1.57, 0);
-      wall3.position.set(-2.5, 2.5, 0); //位置を指定
+      wall3.rotation.set(0, Math.PI / 2, 0);
+      wall3.position.set(-250, 250, 0); //位置を指定
       scene.add(wall3);
 
 
       //前足
-      var legs_a = new THREE.BoxGeometry(0.8, 0.6, 0.4);
+      var legs_a = new THREE.BoxGeometry(80, 60, 40);
       //上の底面の半径、下の底面の半径、高さ、何角柱か
       var legsMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
       var llegs = new THREE.Mesh(legs_a, legsMaterial);
-      llegs.position.set(0, -0.7, 0.4);
+      llegs.position.set(0, -70, 40);
 
       //後ろ足
       var rlegs = new THREE.Mesh(legs_a, legsMaterial);
-      rlegs.position.set(0, -0.7, -0.4);
-
-      //炎の作成
+      rlegs.position.set(0, -70, -40);
+      //　炎の作成
 
       // set path to texture images
       // either relative or absolute path
       VolumetricFire.texturePath = './textures/';
-      var fireWidth = 1;
-      var fireHeight = 4;
-      var fireDepth = 1;
-      var sliceSpacing = 1;
+      var fireWidth = 100;
+      var fireHeight = 200;
+      var fireDepth = 100;
+      var sliceSpacing = 10;
 
       var fire = new VolumetricFire(
         fireWidth,
@@ -187,11 +167,12 @@
         sliceSpacing,
         camera
       );
+      
       scene.add(fire.mesh);
-
+      
       // you can set position, rotation and scale
       // fire.mesh accepts THREE.mesh features
-      fire.mesh.position.set(0, fireHeight / 2, 0);
+      fire.mesh.position.set(0, 320, -180);
 
 
       // 光源（環境光）
@@ -207,7 +188,7 @@
       man.add(llegs);
       man.add(rlegs);
 
-      man.position.set(0, 1, 0);//人間グループの原点の位置
+      man.position.set(0, 100, 0);//人間グループの原点の位置
       scene.add(man);
 
       //全体のオブジェクト
@@ -231,14 +212,13 @@
         // 人間を回転させる
 
         man.position.z += v;
-        if (1 < man.position.z) {
-          v = -0.01;
+        if (100 < man.position.z) {
+          v = -1;
         }
-        if (man.position.z < -1) {
-          v = 0.01;
+        if (man.position.z < -100) {
+          v = 1;
         }
         // 全体を回転させる
-      man.rotation.x += 0.01;
         //all.rotation.y += 0.005;;
       }
 
@@ -255,6 +235,7 @@
         //  Math.cos( elapsed * 0.01 ) * 800
         // );
         // camera.lookAt( scene.position );
+
         fire.update(elapsed);
         renderer.render(scene, camera);
       }
@@ -263,10 +244,6 @@
 </head>
 
 <body>
-  <h1>某ゲームの敵キャラ</h1>
-  棒有名なゲームの代表的な敵キャラを作り、
-  そのキャラが家の中に侵入してしまったような状態です。
-  家の中のような物を再現するのを工夫しました。
   <canvas id="myCanvas"></canvas>
 </body>
 
