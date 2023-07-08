@@ -1,57 +1,57 @@
-
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
-    <script src="OrbitControls.js"></script>
-    <script src="VolumetricFire.js"></script>
 
-    <script>
-      // ページの読み込みを待つ
-      window.addEventListener('load', init);
+<head>
+  <meta charset="utf-8" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+  <script src="OrbitControls.js"></script>
+  <script src="VolumetricFire.js"></script>
 
-      function init() {
-        // サイズを指定
-        const width = 960;
-        const height = 540;
+  <script>
+    // ページの読み込みを待つ
+    window.addEventListener('load', init);
 
-        var clock = new THREE.Clock();
-        // レンダラーを作成
-        const renderer = new THREE.WebGLRenderer({
-          canvas: document.querySelector('#myCanvas')
-        });
-        renderer.setSize(width, height);
-        // 光源が関係ないので
-        renderer.setClearColor(0x333333, 1.0);
+    function init() {
+      // サイズを指定
+      const width = 960;
+      const height = 540;
 
-        // シーンを作成
-        const scene = new THREE.Scene();
-        // シーン全体のフォグ
-        //scene.fog = new THREE.Fog(0x000000, 800, 2000);
+      var clock = new THREE.Clock();
+      // レンダラーを作成
+      const renderer = new THREE.WebGLRenderer({
+        canvas: document.querySelector('#myCanvas')
+      });
+      renderer.setSize(width, height);
+      // 光源が関係ないので
+      renderer.setClearColor(0x333333, 1.0);
 
-        // カメラを作成
-        const camera = new THREE.PerspectiveCamera(45, width / height);
-        // カメラの初期座標を設定
-        camera.position.set(0, 0, 1000);
+      // シーンを作成
+      const scene = new THREE.Scene();
+      // シーン全体のフォグ
+      //scene.fog = new THREE.Fog(0x000000, 800, 2000);
 
-        // カメラコントローラーを作成
-        const controls = new THREE.OrbitControls(camera);
-        controls.autoRotate = true;
+      // カメラを作成
+      const camera = new THREE.PerspectiveCamera(45, width / height);
+      // カメラの初期座標を設定
+      camera.position.set(0, 0, 1000);
 
-        // helper
-        //const gridHelper = new THREE.GridHelper(1000,20); // size, step
-        //scene.add(gridHelper);
-        const axisHelper = new THREE.AxisHelper(1000); //軸の長さ　X：赤、Y：緑、z：青
-        scene.add(axisHelper);
+      // カメラコントローラーを作成
+      const controls = new THREE.OrbitControls(camera);
+      controls.autoRotate = true;
 
-        // マテリアルを作成する
-        const material = new THREE.SpriteMaterial({
-          map: new THREE.TextureLoader().load('img/star.png')
-        });
-        // フォグ（霞）を有効にする
-       // material.fog = true;
+      // helper
+      //const gridHelper = new THREE.GridHelper(1000,20); // size, step
+      //scene.add(gridHelper);
+      const axisHelper = new THREE.AxisHelper(1000); //軸の長さ　X：赤、Y：緑、z：青
+      scene.add(axisHelper);
 
-       // トーチ正面の作成
+      // マテリアルを作成する
+      const material = new THREE.SpriteMaterial({
+        map: new THREE.TextureLoader().load('img/star.png')
+      });
+      // フォグ（霞）を有効にする
+      // material.fog = true;
+
+      // トーチ正面の作成
       var cylinderGeometry = new THREE.CylinderGeometry(5, 3, 200, 8);
       //上の底面の半径、下の底面の半径、高さ、何角柱か
       var cylinderMaterial = new THREE.MeshPhongMaterial({ color: 0xefa92a });
@@ -71,7 +71,7 @@
       cylinder2.rotation.set(0, 0, -0.5);
       cylinder2.position.set(-200, 320, 0);
       scene.add(cylinder2);
-      
+
       // 壁読み込み
       var textureLoader = new THREE.TextureLoader();
       var texture = textureLoader.load("tree.jpg");
@@ -86,8 +86,8 @@
       plane.position.set(0, 0, 0);
       scene.add(plane);
 
-       // ガラス読み込み
-       var textureLoader = new THREE.TextureLoader();
+      // ガラス読み込み
+      var textureLoader = new THREE.TextureLoader();
       var texture = textureLoader.load("windows.jpg");
       var mat = new THREE.MeshPhongMaterial();
       mat.map = texture;
@@ -162,59 +162,59 @@
       //後ろ足
       var rlegs = new THREE.Mesh(legs_a, legsMaterial);
       rlegs.position.set(0, -70, -40);
-        //　炎の作成
+      //　炎の作成
 
-        // set path to texture images
-        // either relative or absolute path
-        VolumetricFire.texturePath = './textures/';
-        var fireWidth  = 100;
-        var fireHeight = 400;
-        var fireDepth  = 100;
-        var sliceSpacing = 10;
+      // set path to texture images
+      // either relative or absolute path
+      VolumetricFire.texturePath = './textures/';
+      var fireWidth = 100;
+      var fireHeight = 400;
+      var fireDepth = 100;
+      var sliceSpacing = 10;
 
-        var fire = new VolumetricFire(
-          fireWidth,
-          fireHeight,
-          fireDepth,
-          sliceSpacing,
-          camera
-        );
-        scene.add( fire.mesh );
+      var fire = new VolumetricFire(
+        fireWidth,
+        fireHeight,
+        fireDepth,
+        sliceSpacing,
+        camera
+      );
+      scene.add(fire.mesh);
 
-        // you can set position, rotation and scale
-        // fire.mesh accepts THREE.mesh features
-        fire.mesh.position.set( 0, fireHeight / 2, 0 );
+      // you can set position, rotation and scale
+      // fire.mesh accepts THREE.mesh features
+      fire.mesh.position.set(0, 100, 0);
 
 
-        // 光源（環境光）
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
-        scene.add(ambientLight);
+      // 光源（環境光）
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
+      scene.add(ambientLight);
 
-        //クリーパーのオブジェクト
+      //クリーパーのオブジェクト
       const man = new THREE.Group();
 
-man.add(face);
-man.add(head); // 頭を追加
-man.add(body); //体を追加
-man.add(llegs);
-man.add(rlegs);
+      man.add(face);
+      man.add(head); // 頭を追加
+      man.add(body); //体を追加
+      man.add(llegs);
+      man.add(rlegs);
 
-man.position.set(0, 100, 0);//人間グループの原点の位置
-scene.add(man);
+      man.position.set(0, 100, 0);//人間グループの原点の位置
+      scene.add(man);
 
-//全体のオブジェクト
-const all = new THREE.Group();
-all.add(plane);//平面を追加
-all.add(man); // 人間を追加
-all.position.set(0, 0, 0);//全体グループの原点の位置
-scene.add(all);
+      //全体のオブジェクト
+      const all = new THREE.Group();
+      all.add(plane);//平面を追加
+      all.add(man); // 人間を追加
+      all.position.set(0, 0, 0);//全体グループの原点の位置
+      scene.add(all);
 
-let v = 1;
+      let v = 1;
 
-update();
-        tick();
+      update();
+      tick();
 
-        function update() {
+      function update() {
         // レンダリング
         renderer.render(scene, camera);
         requestAnimationFrame(update);
@@ -233,27 +233,29 @@ update();
         //all.rotation.y += 0.005;;
       }
 
-        // 毎フレーム時に実行されるループイベントです
-        function tick() {
-          // レンダリング
-          requestAnimationFrame( tick );
+      // 毎フレーム時に実行されるループイベントです
+      function tick() {
+        // レンダリング
+        requestAnimationFrame(tick);
 
-          var elapsed = clock.getElapsedTime();
+        var elapsed = clock.getElapsedTime();
 
-          //camera.position.set(
-          //  Math.sin( elapsed * 0.01 ) * 800,
-          //  Math.sin( elapsed * 0.05 ) * 1000,
-          //  Math.cos( elapsed * 0.01 ) * 800
-         // );
-         // camera.lookAt( scene.position );
+        //camera.position.set(
+        //  Math.sin( elapsed * 0.01 ) * 800,
+        //  Math.sin( elapsed * 0.05 ) * 1000,
+        //  Math.cos( elapsed * 0.01 ) * 800
+        // );
+        // camera.lookAt( scene.position );
 
-          fire.update( elapsed );
-          renderer.render(scene, camera);
-        }
+        fire.update(elapsed);
+        renderer.render(scene, camera);
       }
-    </script>
-  </head>
-  <body>
-    <canvas id="myCanvas"></canvas>
-  </body>
+    }
+  </script>
+</head>
+
+<body>
+  <canvas id="myCanvas"></canvas>
+</body>
+
 </html>
