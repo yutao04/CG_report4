@@ -147,7 +147,7 @@
 
       // 壁左を作成
       var wall3 = new THREE.Mesh(geometry, mat);
-      wall3.rotation.set(0, 157, 0);
+      wall3.rotation.set(0, Math.PI / 2, 0);
       wall3.position.set(-250, 250, 0); //位置を指定
       scene.add(wall3);
 
@@ -199,7 +199,7 @@ man.add(body); //体を追加
 man.add(llegs);
 man.add(rlegs);
 
-man.position.set(0, 1, 0);//人間グループの原点の位置
+man.position.set(0, 100, 0);//人間グループの原点の位置
 scene.add(man);
 
 //全体のオブジェクト
@@ -223,17 +223,16 @@ update();
         // 人間を回転させる
 
         man.position.z += v;
-        if (1 < man.position.z) {
-          v = -0.01;
+        if (100 < man.position.z) {
+          v = -1;
         }
-        if (man.position.z < -1) {
-          v = 0.01;
+        if (man.position.z < -100) {
+          v = 1;
         }
         // 全体を回転させる
-      man.rotation.x += 0.01;
         //all.rotation.y += 0.005;;
       }
-      
+
         // 毎フレーム時に実行されるループイベントです
         function tick() {
           // レンダリング
