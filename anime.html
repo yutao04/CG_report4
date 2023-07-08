@@ -12,44 +12,37 @@
 
       function init() {
         // サイズを指定
-      const width = 800
-      const height = 600;
+        const width = 960;
+        const height = 540;
 
-      // レンダラーを作成
-      var renderer = new THREE.WebGLRenderer();
-      document.body.appendChild(renderer.domElement);
-      renderer.setSize(width, height);
+        var clock = new THREE.Clock();
+        // レンダラーを作成
+        const renderer = new THREE.WebGLRenderer({
+          canvas: document.querySelector('#myCanvas')
+        });
+        renderer.setSize(width, height);
+        // 光源が関係ないので
+        renderer.setClearColor(0x333333, 1.0);
 
-      // 背景の色を設定
-      renderer.setClearColor(0x003366);
+        // シーンを作成
+        const scene = new THREE.Scene();
+        // シーン全体のフォグ
+        //scene.fog = new THREE.Fog(0x000000, 800, 2000);
 
-      // シーンを作成
-      const scene = new THREE.Scene();
+        // カメラを作成
+        const camera = new THREE.PerspectiveCamera(45, width / height);
+        // カメラの初期座標を設定
+        camera.position.set(0, 0, 1000);
 
-      // カメラを作成
-      const camera = new THREE.PerspectiveCamera(45, width / height);
-      // カメラの初期座標を設定
-      camera.position.set(0, 0, 10);
+        // カメラコントローラーを作成
+        const controls = new THREE.OrbitControls(camera);
+        controls.autoRotate = true;
 
-      // カメラコントローラーを作成
-      const controls = new THREE.OrbitControls(camera, document.body);
-
-      // 平行光源1
-      var directionalLight1 = new THREE.DirectionalLight(0xffffff);
-      directionalLight1.position.set(10, 10, 10);
-      // シーンに追加
-      scene.add(directionalLight1);
-      // 平行光源2
-      var directionalLight2 = new THREE.DirectionalLight(0x888888);
-      directionalLight2.position.set(-10, -10, 10);
-      // シーンに追加
-      scene.add(directionalLight2);
-
-      // helper
-      const gridHelper = new THREE.GridHelper(2, 10); // size, step
-      scene.add(gridHelper);
-      const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
-      scene.add(axisHelper);
+        // helper
+        //const gridHelper = new THREE.GridHelper(1000,20); // size, step
+        //scene.add(gridHelper);
+        const axisHelper = new THREE.AxisHelper(1000); //軸の長さ　X：赤、Y：緑、z：青
+        scene.add(axisHelper);
 
         // マテリアルを作成する
         const material = new THREE.SpriteMaterial({
@@ -59,12 +52,12 @@
        // material.fog = true;
 
        // トーチ正面の作成
-      var cylinderGeometry = new THREE.CylinderGeometry(0.05, 0.03, 1, 8);
+      var cylinderGeometry = new THREE.CylinderGeometry(50, 30, 100, 8);
       //上の底面の半径、下の底面の半径、高さ、何角柱か
       var cylinderMaterial = new THREE.MeshPhongMaterial({ color: 0xefa92a });
       var cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
       cylinder.rotation.set(0.5, 0, 0);
-      cylinder.position.set(0, 3.2, -2);
+      cylinder.position.set(0, 320, -200);
       scene.add(cylinder);
 
       // トーチ右の作成
