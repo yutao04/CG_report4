@@ -179,12 +179,28 @@
         sliceSpacing,
         camera
       );
-      
+      var fire1 = new VolumetricFire(
+        fireWidth,
+        fireHeight,
+        fireDepth,
+        sliceSpacing,
+        camera
+      );
+      var fire2 = new VolumetricFire(
+        fireWidth,
+        fireHeight,
+        fireDepth,
+        sliceSpacing,
+        camera
+      );
       scene.add(fire.mesh);
-      
+      scene.add(fire1.mesh);
+      scene.add(fire2.mesh);
       // you can set position, rotation and scale
       // fire.mesh accepts THREE.mesh features
       fire.mesh.position.set(180, 320, 0);
+      fire1.mesh.position.set(180, 320, 0);
+      fire2.mesh.position.set(180, 320, 0);
 
 
       // 光源（環境光）
