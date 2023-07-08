@@ -179,11 +179,12 @@
         sliceSpacing,
         camera
       );
+      fire.position.set(0,100,0);
       scene.add(fire.mesh);
 
       // you can set position, rotation and scale
       // fire.mesh accepts THREE.mesh features
-      fire.mesh.position.set(0, 100, 0);
+      fire.mesh.position.set(0, fireHeight / 2, 0);
 
 
       // 光源（環境光）
