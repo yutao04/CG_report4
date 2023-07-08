@@ -60,18 +60,6 @@
       cylinder.position.set(0, 220, -200);
       scene.add(cylinder);
 
-      // トーチ右の作成
-      var cylinder1 = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
-      cylinder1.rotation.set(0, 0, 0.5);
-      cylinder1.position.set(200, 220, 0);
-      scene.add(cylinder1);
-
-      // トーチの作成
-      var cylinder2 = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
-      cylinder2.rotation.set(0, 0, -0.5);
-      cylinder2.position.set(-200, 220, 0);
-      scene.add(cylinder2);
-
       // 壁読み込み
       var textureLoader = new THREE.TextureLoader();
       var texture = textureLoader.load("tree.jpg");
@@ -179,28 +167,12 @@
         sliceSpacing,
         camera
       );
-      var fire1 = new VolumetricFire(
-        fireWidth,
-        fireHeight,
-        fireDepth,
-        sliceSpacing,
-        camera
-      );
-      var fire2 = new VolumetricFire(
-        fireWidth,
-        fireHeight,
-        fireDepth,
-        sliceSpacing,
-        camera
-      );
+      
       scene.add(fire.mesh);
-      scene.add(fire1.mesh);
-      scene.add(fire2.mesh);
+      
       // you can set position, rotation and scale
       // fire.mesh accepts THREE.mesh features
-      fire.mesh.position.set(180, 320, 0);
-      fire1.mesh.position.set(-180, 320, 0);
-      fire2.mesh.position.set(0, 320, -180);
+      fire.mesh.position.set(0, 320, -180);
 
 
       // 光源（環境光）
